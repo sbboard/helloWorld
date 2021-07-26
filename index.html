@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hello World</title>
+  </head>
+  <body>
+    <style>
+      #globeContain {
+        background-color: #eef9ee;
+        position: relative;
+      }
+      #globeBoy {
+        white-space: pre;
+        letter-spacing: -0.15em;
+        font-family: "courier new";
+        filter: drop-shadow(2px 1px 1px rgba(0, 0, 0, 0.5));
+        width: fit-content;
+      }
+      #eyeOne,
+      #eyeTwo {
+        white-space: pre;
+        letter-spacing: -0.124em;
+        font-family: "courier new";
+        background-color: #eef9ee;
+        position: absolute;
+        z-index: 2;
+        left: 7.25em;
+        top: 9.95em;
+      }
+      #eyeOne span,
+      #eyeTwo span {
+        filter: drop-shadow(2px 1px 1px rgba(0, 0, 0, 0.5));
+      }
+      #eyeTwo {
+        left: 20.4em;
+        transform: rotateY(180deg);
+      }
+      #mouth {
+        position: absolute;
+        top: 22.5em;
+        left: 13.75em;
+        letter-spacing: -0.45em;
+      }
+    </style>
+    <div id="globeContain">
+      <div id="eyeOne"><span></span></div>
+      <div id="eyeTwo"></div>
+      <div id="mouth"></div>
+      <div id="globeBoy"></div>
+    </div>
+    <audio src="./audio/hello.mp3" preload="auto"></audio>
+    <audio src="./audio/world.mp3" preload="auto"></audio>
+    <script src="./whitespaceassets.js"></script>
+    <script>
+      let globeHolder = document.getElementById("globeBoy");
+      let globeIndex = 0;
+      let blinkframe = 0;
+      globeHolder.innerHTML = globeFrames[0];
+
+      let eyeOne = document.getElementById("eyeOne");
+      let eyeTwo = document.getElementById("eyeTwo");
+      let mouthEl = document.getElementById("mouth");
+      eyeOne.innerHTML = eye;
+      eyeTwo.innerHTML = eye;
+      mouthEl.innerHTML = mouth;
+
+      setInterval(function () {
+        if (globeIndex < globeFrames.length - 1) {
+          globeIndex = globeIndex + 1;
+          globeHolder.innerHTML = globeFrames[globeIndex];
+        } else {
+          globeHolder.innerHTML = globeFrames[0];
+          globeIndex = 0;
+        }
+      }, 100);
+
+      setInterval(function () {
+        let blinkInt = setInterval(() => {
+          eyeOne.innerHTML = blink[blinkframe];
+          eyeTwo.innerHTML = blink[blinkframe];
+          blinkframe++;
+          if (blinkframe > blink.length) {
+            eyeOne.innerHTML = eye;
+            eyeTwo.innerHTML = eye;
+            blinkframe = 0;
+            clearInterval(blinkInt);
+          }
+        }, 100);
+      }, 5000);
+    </script>
+  </body>
+</html>
